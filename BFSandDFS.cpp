@@ -17,14 +17,11 @@ void printDFS(int ** edges,int n,int start,bool* visited)
 	}
 }
 
-void printBFS(int **edges,int n,int start)
+
+void printBFS(int **edges,int n,int start,bool* visited)
 {
 	queue<int>q;
-	bool*visited=new bool[n];
-	for(int i=0;i<n;i++)
-	{
-		visited[i]=false;
-	}
+	
 	q.push(start);
 	visited[start]=true;
 	while(!q.empty())
@@ -39,6 +36,42 @@ void printBFS(int **edges,int n,int start)
 				q.push(i);
 				visited[i]=true;
 			}
+		}
+	}
+	
+	
+}
+
+void BFS(int ** edges,int n){
+    bool * visited=new bool[n];
+	for(int i=0;i<n;i++)
+	{
+		visited[i]=false;
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		if(!visited[i])
+		{
+			printBFS(edges,n,i,visited);
+		}
+	}
+	
+	delete [] visited;
+}
+
+void DFS(int ** edges,int n){
+    bool * visited=new bool[n];
+	for(int i=0;i<n;i++)
+	{
+		visited[i]=false;
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		if(!visited[i])
+		{
+			printBFS(edges,n,i,visited);
 		}
 	}
 	
@@ -66,19 +99,15 @@ int main()
 		edges[f][s]=1;
 		edges[s][f]=1;
 	}
-	bool * visited=new bool[n];
-	for(int i=0;i<n;i++)
-	{
-		visited[i]=false;
-	}
+	
 	
 	//Dfs
-	printDFS(edges,n,0,visited);
+	DFS(edges,n);
 	
 	//bfs
-	printBFS(edges,n,0);
+	BFS(edges,n);
 	
-	delete [] visited;
+	
 	
 	for(int i=0;i<n;i++)
 	{
